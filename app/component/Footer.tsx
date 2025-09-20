@@ -6,7 +6,7 @@ export default function Footer() {
       {/* Pulsante Telefono */}
       <a
         href="tel:+39 3484713563"
-        className=" text-white    rounded-full  text-sm  flex items-center justify-center   transition"
+        className=" text-white rounded-full  text-sm  flex items-center justify-center   transition"
         title="Chiama"
       >
         +39 348 471 3563
