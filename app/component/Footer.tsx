@@ -15,7 +15,7 @@ export default function Footer() {
       {/* Pulsante Email */}
       <a
         href="mailto:francesco_tizzano@gmail.com"
-        className=" text-white    rounded-full text-sm  flex items-center justify-center   transition"
+        className=" text-white rounded-full text-sm  flex items-center justify-center   transition"
         title="Email"
       >
         francesco_tizazno@gmail.com
