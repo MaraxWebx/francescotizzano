@@ -26,7 +26,7 @@ export default function Footer() {
         href="https://instagram.com/tuo_username"
         target="_blank"
         rel="noopener noreferrer"
-        className=" text-white    rounded-full text-sm  flex items-center justify-center   transition"
+        className=" text-white rounded-full text-sm  flex items-center justify-center   transition"
         title="Instagram"
       >
         @tizzano
