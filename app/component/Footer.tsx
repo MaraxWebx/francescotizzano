@@ -5,11 +5,11 @@ export default function Footer() {
     <div className="fixed bottom-0 left-0 w-full flex justify-end pb-6 pr-6 z-50    gap-4 z-50">
       {/* Pulsante Telefono */}
       <a
-        href="tel:+391234567890"
+        href="tel:+39 3484713563"
         className=" text-white    rounded-full  text-sm  flex items-center justify-center   transition"
         title="Chiama"
       >
-        351 990 7274
+        +39 348 471 3563
       </a>
 
       {/* Pulsante Email */}
@@ -18,7 +18,7 @@ export default function Footer() {
         className=" text-white    rounded-full text-sm  flex items-center justify-center   transition"
         title="Email"
       >
-        francesco_tizano@gmail.com
+        francesco_tizazno@gmail.com
       </a>
 
       {/* Pulsante Instagram */}

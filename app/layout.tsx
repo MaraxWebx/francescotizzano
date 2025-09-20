@@ -9,8 +9,8 @@ const gothicFont = Electrolize({
 });
 
 export const metadata: Metadata = {
-  title: "MarettaxWeb",
-  description: "Sito web",
+  title: "Francesco tizzano",
+  description: "Designer",
 };
 
 export default function RootLayout({
