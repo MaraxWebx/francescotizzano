@@ -2,7 +2,7 @@
 
 export default function Footer() {
   return (
-    <div className="fixed bottom-0 left-0 w-full flex justify-end pb-6 pr-6 z-50    gap-4 z-50">
+    <div className="fixed bottom-0 left-0 w-full flex  lg:justify-end justify-center lg:pb-6 lg:pr-6 z-50    gap-4 z-50">
       {/* Pulsante Telefono */}
       <a
         href="tel:+39 3484713563"
