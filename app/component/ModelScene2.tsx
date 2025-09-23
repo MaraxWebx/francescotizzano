@@ -1,147 +1,68 @@
 "use client";
 
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useGLTF } from "@react-three/drei";
-import { useEffect, useRef } from "react";
-import * as THREE from "three";
+import { useGLTF, Text } from "@react-three/drei";
+import { useRef, useEffect, useState } from "react";
+import { Mesh } from "three";
 
-// Definiamo il tipo globale per la funzione di clear
-declare global {
-  interface Window {
-    __clearDrawing?: () => void;
-  }
-}
-
-/* ---- Model semplice ---- */
 function Model({ file }: { file: string }) {
   const { scene } = useGLTF(file);
-  return <primitive object={scene} scale={1.5} position={[0, -1, 0]} />;
-}
+  const ref = useRef<Mesh>(null!);
 
-/* ---- DrawingPlane ---- */
-function DrawingPlane({ distance = 0.6 }: { distance?: number }) {
-  const meshRef = useRef<THREE.Mesh | null>(null);
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const textureRef = useRef<THREE.CanvasTexture | null>(null);
-  const drawingRef = useRef(false);
+  const [mouse, setMouse] = useState({ x: 0, y: 0 });
+  const [targetScroll, setTargetScroll] = useState(0);
+  const scrollPos = useRef(0);
 
   useEffect(() => {
-    const canvas = document.createElement("canvas");
-    canvasRef.current = canvas;
-
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-
-    const resizeCanvas = () => {
-      const w = window.innerWidth;
-      const h = window.innerHeight;
-      canvas.width = Math.round(w * dpr);
-      canvas.height = Math.round(h * dpr);
-      canvas.style.width = `${w}px`;
-      canvas.style.height = `${h}px`;
-      const ctx = canvas.getContext("2d")!;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      ctx.lineWidth = 3;
-      ctx.lineCap = "round";
-      ctx.strokeStyle = "white";
+    const handleMouseMove = (e: MouseEvent) => {
+      const { innerWidth, innerHeight } = window;
+      const x = (e.clientX / innerWidth - 0.5) * 2;
+      const y = (e.clientY / innerHeight - 0.5) * 2;
+      setMouse({ x, y });
     };
-
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
-
-    const texture = new THREE.CanvasTexture(canvas);
-    texture.minFilter = THREE.LinearFilter;
-    texture.magFilter = THREE.LinearFilter;
-    texture.format = THREE.RGBAFormat;
-    texture.needsUpdate = true;
-    textureRef.current = texture;
-
-    const ctx = canvas.getContext("2d")!;
-
-    const start = (e: PointerEvent) => {
-      e.preventDefault();
-      drawingRef.current = true;
-      ctx.beginPath();
-      ctx.moveTo(e.clientX, e.clientY);
-    };
-    const move = (e: PointerEvent) => {
-      if (!drawingRef.current) return;
-      e.preventDefault();
-      ctx.lineTo(e.clientX, e.clientY);
-      ctx.stroke();
-      texture.needsUpdate = true;
-    };
-    const end = () => {
-      drawingRef.current = false; // rimosso il parametro inutilizzato
-    };
-
-    window.addEventListener("pointerdown", start, { passive: false });
-    window.addEventListener("pointermove", move, { passive: false });
-    window.addEventListener("pointerup", end);
-    window.addEventListener("pointercancel", end);
-
-    // funzione globale sicura senza any
-    window.__clearDrawing = () => {
-      const c = canvasRef.current;
-      const t = textureRef.current;
-      if (!c || !t) return;
-      const ctx2 = c.getContext("2d")!;
-      ctx2.clearRect(0, 0, c.width, c.height);
-      t.needsUpdate = true;
-    };
-
-    return () => {
-      window.removeEventListener("resize", resizeCanvas);
-      window.removeEventListener("pointerdown", start);
-      window.removeEventListener("pointermove", move);
-      window.removeEventListener("pointerup", end);
-      window.removeEventListener("pointercancel", end);
-      delete window.__clearDrawing;
-      texture.dispose();
-    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  useFrame(({ camera }) => {
-    const mesh = meshRef.current;
-    const texture = textureRef.current;
-    const canvas = canvasRef.current;
-    if (!mesh || !texture || !canvas) return;
+  useEffect(() => {
+    const handleScroll = () => {
+      setTargetScroll(window.scrollY / 100);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-    const fov = (camera.fov * Math.PI) / 180;
-    const height = 2 * Math.tan(fov / 2) * distance;
-    const width = height * camera.aspect;
-    mesh.scale.set(width, height, 1);
+  useFrame(() => {
+    if (ref.current) {
+      ref.current.rotation.y = mouse.x * 0.8;
+      ref.current.rotation.x = -mouse.y * 0.8;
 
-    mesh.position.copy(camera.position);
-    mesh.quaternion.copy(camera.quaternion);
-    mesh.translateZ(-distance);
-
-    const mat = mesh.material as THREE.MeshBasicMaterial;
-    if (mat.map !== texture) {
-      mat.map = texture;
-      mat.transparent = true;
-      mat.depthTest = false;
-      mat.depthWrite = false;
-      mat.needsUpdate = true;
+      scrollPos.current += (targetScroll - scrollPos.current) * 0.1;
+      ref.current.position.y = -scrollPos.current;
     }
   });
 
-  return (
-    <mesh ref={meshRef} renderOrder={999}>
-      <planeGeometry args={[1, 1]} />
-      <meshBasicMaterial />
-    </mesh>
-  );
+  return <primitive ref={ref} object={scene} scale={1.5} />;
 }
 
-/* ---- Componente scena ---- */
-export default function SceneWithDrawing() {
+export default function ModelScene2() {
   return (
-    <div className="h-screen w-screen relative bg-black">
+    <div className="h-screen w-screen bg-black">
       <Canvas camera={{ position: [0, 1, 6], fov: 50 }}>
         <ambientLight intensity={0.6} />
         <directionalLight position={[5, 5, 5]} intensity={1} />
         <Model file="/models/tizzano/tizzano-1.glb" />
-        <DrawingPlane distance={0.6} />
+
+        {/* Testo 3D */}
+        {/*   <Text
+          position={[0, -2, 0]}
+          fontSize={0.1}
+          color="white"
+          anchorX="center"
+          anchorY="middle"
+        >
+          stylist art director consultant
+        </Text> */}
       </Canvas>
     </div>
   );
