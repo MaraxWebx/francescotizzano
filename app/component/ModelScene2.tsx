@@ -5,13 +5,20 @@ import { useGLTF } from "@react-three/drei";
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
+// Definiamo il tipo globale per la funzione di clear
+declare global {
+  interface Window {
+    __clearDrawing?: () => void;
+  }
+}
+
 /* ---- Model semplice ---- */
 function Model({ file }: { file: string }) {
   const { scene } = useGLTF(file);
   return <primitive object={scene} scale={1.5} position={[0, -1, 0]} />;
 }
 
-/* ---- DrawingPlane: canvas offscreen -> CanvasTexture su Plane ---- */
+/* ---- DrawingPlane ---- */
 function DrawingPlane({ distance = 0.6 }: { distance?: number }) {
   const meshRef = useRef<THREE.Mesh | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -19,7 +26,6 @@ function DrawingPlane({ distance = 0.6 }: { distance?: number }) {
   const drawingRef = useRef(false);
 
   useEffect(() => {
-    // crea canvas offscreen
     const canvas = document.createElement("canvas");
     canvasRef.current = canvas;
 
@@ -33,18 +39,15 @@ function DrawingPlane({ distance = 0.6 }: { distance?: number }) {
       canvas.style.width = `${w}px`;
       canvas.style.height = `${h}px`;
       const ctx = canvas.getContext("2d")!;
-      // scala il contesto in modo da poter usare clientX/clientY in CSS px
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.lineWidth = 3;
       ctx.lineCap = "round";
       ctx.strokeStyle = "white";
-      // non riempire: vogliamo trasparenza di default
     };
 
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
-    // texture three.js dalla canvas
     const texture = new THREE.CanvasTexture(canvas);
     texture.minFilter = THREE.LinearFilter;
     texture.magFilter = THREE.LinearFilter;
@@ -54,9 +57,7 @@ function DrawingPlane({ distance = 0.6 }: { distance?: number }) {
 
     const ctx = canvas.getContext("2d")!;
 
-    // gestione disegno con pointer events (mouse+touch unify)
     const start = (e: PointerEvent) => {
-      // non bloccare altrove ma impediamo comportamento di default
       e.preventDefault();
       drawingRef.current = true;
       ctx.beginPath();
@@ -69,8 +70,8 @@ function DrawingPlane({ distance = 0.6 }: { distance?: number }) {
       ctx.stroke();
       texture.needsUpdate = true;
     };
-    const end = (e?: PointerEvent) => {
-      drawingRef.current = false;
+    const end = () => {
+      drawingRef.current = false; // rimosso il parametro inutilizzato
     };
 
     window.addEventListener("pointerdown", start, { passive: false });
@@ -78,8 +79,8 @@ function DrawingPlane({ distance = 0.6 }: { distance?: number }) {
     window.addEventListener("pointerup", end);
     window.addEventListener("pointercancel", end);
 
-    // expose clear function (pratico per il bottone "Clear")
-    (window as any).__clearDrawing = () => {
+    // funzione globale sicura senza any
+    window.__clearDrawing = () => {
       const c = canvasRef.current;
       const t = textureRef.current;
       if (!c || !t) return;
@@ -94,30 +95,26 @@ function DrawingPlane({ distance = 0.6 }: { distance?: number }) {
       window.removeEventListener("pointermove", move);
       window.removeEventListener("pointerup", end);
       window.removeEventListener("pointercancel", end);
-      delete (window as any).__clearDrawing;
+      delete window.__clearDrawing;
       texture.dispose();
     };
   }, []);
 
-  // posiziona e scala il piano per coprire lo schermo alla distanza scelta
   useFrame(({ camera }) => {
     const mesh = meshRef.current;
     const texture = textureRef.current;
     const canvas = canvasRef.current;
     if (!mesh || !texture || !canvas) return;
 
-    // calcola dimensione del frustum al dato "distance"
     const fov = (camera.fov * Math.PI) / 180;
     const height = 2 * Math.tan(fov / 2) * distance;
     const width = height * camera.aspect;
     mesh.scale.set(width, height, 1);
 
-    // posiziona davanti alla camera orientandosi su di essa
     mesh.position.copy(camera.position);
     mesh.quaternion.copy(camera.quaternion);
     mesh.translateZ(-distance);
 
-    // assicurati che la material abbia la texture
     const mat = mesh.material as THREE.MeshBasicMaterial;
     if (mat.map !== texture) {
       mat.map = texture;
@@ -131,13 +128,12 @@ function DrawingPlane({ distance = 0.6 }: { distance?: number }) {
   return (
     <mesh ref={meshRef} renderOrder={999}>
       <planeGeometry args={[1, 1]} />
-      {/* material usato; map assegnata in useFrame */}
       <meshBasicMaterial />
     </mesh>
   );
 }
 
-/* ---- Componente scena completa con bottone Clear ---- */
+/* ---- Componente scena ---- */
 export default function SceneWithDrawing() {
   return (
     <div className="h-screen w-screen relative bg-black">
@@ -147,15 +143,6 @@ export default function SceneWithDrawing() {
         <Model file="/models/tizzano/tizzano-1.glb" />
         <DrawingPlane distance={0.6} />
       </Canvas>
-
-      {/* Bottone DOM per cancellare la lavagna */}
-      {/*  <button
-        onClick={() => (window as any).__clearDrawing?.()}
-        className="absolute top-4 right-4 z-50 bg-white text-black px-3 py-1 rounded"
-        style={{ pointerEvents: "auto" }}
-      >
-        Clear
-      </button> */}
     </div>
   );
 }
