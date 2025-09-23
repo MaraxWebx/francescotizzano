@@ -34,18 +34,21 @@ function FloatingObj({ file }: { file: string }) {
 }
 
 export default function Loader3D({ onFinish }: { onFinish: () => void }) {
-  const files = [/* "/models/maretta-11.obj", */ "/models/tizzano/maxo.obj"];
+  const files = [
+    /* "/models/maretta-11.obj", */ "/models/tizzano/maxo.obj",
+    "/models/tizzano/mesh_vertex_colors.obj",
+  ];
   const [current, setCurrent] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % files.length);
-    }, 2000);
+    }, 1000);
 
     const timeout = setTimeout(() => {
       clearInterval(interval);
       onFinish();
-    }, files.length * 2000);
+    }, files.length * 1000);
 
     return () => {
       clearInterval(interval);

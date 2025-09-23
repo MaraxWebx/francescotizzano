@@ -12,8 +12,8 @@ function SideObj() {
   // oscillazione lenta avanti/indietro senza rotazione continua
   useFrame((state) => {
     if (ref.current) {
-      ref.current.rotation.y = Math.sin(state.clock.elapsedTime) * 0.3; // oscillazione y
-      ref.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.5) * 0.1; // oscillazione x più lenta
+      ref.current.rotation.y = Math.sin(state.clock.elapsedTime) * 0.1; // oscillazione y
+      ref.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.5) * 0.02; // oscillazione x più lenta
     }
   });
 
@@ -23,7 +23,7 @@ function SideObj() {
 export default function SideModel() {
   return (
     <div className="lg:fixed block bg-black lg:top-0 lg:left-0 h-screen  lg:w-1/4  w-screen border-0  z-40 pointer-events-none">
-      <Canvas camera={{ position: [0, 1, 6], fov: 50 }}>
+      <Canvas camera={{ position: [0, 0, 6], fov: 50 }}>
         <ambientLight intensity={0.6} />
         <directionalLight position={[5, 5, 5]} />
         <SideObj />

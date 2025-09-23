@@ -18,12 +18,15 @@ export default function Home() {
       {loading && <Loader3D onFinish={() => setLoading(false)} />}
       {!loading && (
         <>
-          <Header />
-          <ModelScene2 />
-          <SideModel />
-          <RightModel />
-          <FixedModel />
-          <Footer />
+          <div>
+            <Header />
+            <ModelScene2 />
+            <SideModel />
+            <RightModel />
+            {/*           <FixedModel />
+             */}{" "}
+            <Footer />
+          </div>
         </>
       )}
     </div>
