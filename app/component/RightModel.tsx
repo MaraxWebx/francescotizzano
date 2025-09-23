@@ -6,12 +6,15 @@ import { useRef, useEffect, useState } from "react";
 import { Mesh } from "three";
 
 const models = [
-  /*   "/models/tizzano/tizzano-8.glb",
+  /*   "/models/tizzano/tizzano-3.glb",
    */ "/models/tizzano/tizzano-6.glb",
   "/models/tizzano/tizzano-7.glb",
   "/models/tizzano/tizzano-4.glb",
   "/models/tizzano/tizzano-5.glb",
   "/models/tizzano/tizzano-9.glb",
+  "/models/tizzano/tizzano-14.glb",
+  "/models/tizzano/tizzano-16.glb",
+  "/models/tizzano/tizzano-20.glb",
 ];
 
 function AnimatedModel({ url }: { url: string }) {
