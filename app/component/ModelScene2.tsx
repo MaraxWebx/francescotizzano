@@ -54,15 +54,16 @@ export default function ModelScene2() {
         <Model file="/models/tizzano/tizzano-1.glb" />
 
         {/* Testo 3D */}
-        {/*   <Text
-          position={[0, -2, 0]}
-          fontSize={0.1}
+        <Text
+          position={[0, 0, 0]}
+          fontSize={0.5}
+          rotation={[5, -180, 0]}
           color="white"
-          anchorX="center"
-          anchorY="middle"
+          anchorX="left"
+          anchorY="top"
         >
           stylist art director consultant
-        </Text> */}
+        </Text>
       </Canvas>
     </div>
   );
