@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 export default function Header() {
   const pathname = usePathname(); // legge il path corrente
 
-  const isGallery = pathname === "/gallery";
+  const isGallery = pathname === "/style";
 
   return (
     <header className="fixed top-0 left-0 w-full flex justify-between p-6 z-50 bg-transparent">
@@ -19,12 +19,12 @@ export default function Header() {
           X
         </Link>
       ) : (
-        // 🔹 Se sei in home (o altrove) → mostra "Gallery"
+        // 🔹 Se sei in home (o altrove) → mostra "Style"
         <Link
-          href="/gallery"
+          href="/style"
           className="text-white text-md font-bold tracking-wide hover:underline"
         >
-          Gallery
+          Style
         </Link>
       )}
 
