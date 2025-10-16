@@ -9,7 +9,7 @@ const gothicFont = Electrolize({
 });
 
 export const metadata: Metadata = {
-  title: "Francesco tizzano",
+  title: "Francesco Tizzano",
   description: "Designer",
 };
 
