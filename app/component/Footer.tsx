@@ -18,12 +18,12 @@ export default function Footer() {
         className=" text-white rounded-full text-xs  flex items-center justify-center   transition"
         title="Email"
       >
-        francesco_tizazno@gmail.com
+        francesco_tizzano@gmail.com
       </a>
 
       {/* Pulsante Instagram */}
       <a
-        href="https://www.instagram.com/francescotizzano?utm_source=ig_web_button_share_sheet&igsh=dmp4bG43dnA0anJr"
+        href="https://www.instagram.com/francescotizzano/"
         target="_blank"
         rel="noopener noreferrer"
         className=" text-white rounded-full text-xs  flex items-center justify-center   transition"

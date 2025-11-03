@@ -14,7 +14,7 @@ export default function Header() {
         // 🔹 Se sei nella pagina gallery → mostra "Back"
         <Link
           href="/"
-          className="text-white text-2xl font-bold tracking-wide hover:underline"
+          className="text-white text-2xl  tracking-wide hover:underline"
         >
           X
         </Link>
@@ -22,14 +22,14 @@ export default function Header() {
         // 🔹 Se sei in home (o altrove) → mostra "Style"
         <Link
           href="/style"
-          className="text-white text-md font-bold tracking-wide hover:underline"
+          className="text-white text-md tracking-wide hover:underline"
         >
           Style
         </Link>
       )}
 
-      <Link href="/" className="text-white text-md font-bold tracking-wide">
-        Francesco_Tizzano
+      <Link href="/" className="text-white text-md  tracking-wide">
+        FrancescoTizzano
       </Link>
     </header>
   );

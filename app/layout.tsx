@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
-import { Electrolize } from "next/font/google";
-import "./globals.css";
+import { Mulish } from "next/font/google";
+import "../app/globals.css";
 
-const gothicFont = Electrolize({
+const gabaritoFont = Mulish({
   weight: "400", // peso richiesto dal font
-  variable: "--font-gothic",
+  variable: "--font-mulish",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "Francesco Tizzano",
+  title: "FrancescoTizzano",
   description: "Designer",
 };
 
@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${gothicFont.variable} antialiased`}>{children}</body>
+      <body className={`${gabaritoFont.variable} antialiased`}>{children}</body>
     </html>
   );
 }
