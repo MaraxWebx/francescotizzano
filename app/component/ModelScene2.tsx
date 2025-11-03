@@ -45,6 +45,34 @@ function Model({ file }: { file: string }) {
   return <primitive ref={ref} object={scene} scale={1.5} />;
 }
 
+// 🔹 Nuovo componente per il testo fluttuante e rotante
+function FloatingText() {
+  const ref = useRef<Mesh>(null!);
+
+  useFrame((state) => {
+    if (ref.current) {
+      const t = state.clock.elapsedTime;
+      // morbido fluttuare e rotazione
+      ref.current.position.y = Math.sin(t * 1.2) * 0.25; // fluttuazione
+      ref.current.rotation.y = Math.sin(t * 0.5) * 0.4; // rotazione dolce
+      ref.current.rotation.x = Math.cos(t * 0.3) * 0.1; // leggera inclinazione
+    }
+  });
+
+  return (
+    <Text
+      ref={ref}
+      position={[0, -0.5, 3]}
+      fontSize={0.1}
+      color="white"
+      anchorX="center"
+      anchorY="middle"
+    >
+      Stylist | Art Director | Consultant
+    </Text>
+  );
+}
+
 export default function ModelScene2() {
   return (
     <div className="h-screen w-screen bg-black">
@@ -52,18 +80,7 @@ export default function ModelScene2() {
         <ambientLight intensity={0.6} />
         <directionalLight position={[5, 5, 5]} intensity={1} />
         <Model file="/models/tizzano/tizzano-1.glb" />
-
-        {/* Testo 3D */}
-        <Text
-          position={[0, 0, 0]}
-          fontSize={0.5}
-          rotation={[5, -180, 0]}
-          color="white"
-          anchorX="left"
-          anchorY="top"
-        >
-          stylist art director consultant
-        </Text>
+        <FloatingText />
       </Canvas>
     </div>
   );
