@@ -47,7 +47,10 @@ export default function RootLayout({
           property="og:description"
           content="Stylist e Art Director a Napoli: trasformo visioni in identità visive forti e riconoscibili, unendo gusto contemporaneo e consulenza creativa mirata."
         />
-        <meta property="og:image" content="/favicon-32x32.png" />
+        <meta
+          property="og:image"
+          content="https://francescotizzano.vercel.app/favicon-32x32.png"
+        />
         <meta
           property="og:url"
           content="https://francescotizzano.vercel.app/"
@@ -64,7 +67,10 @@ export default function RootLayout({
           name="twitter:description"
           content="Stylist e Art Director a Napoli: trasformo visioni in identità visive forti e riconoscibili."
         />
-        <meta name="twitter:image" content="/favicon-32x32.png" />
+        <meta
+          name="twitter:image"
+          content="https://francescotizzano.vercel.app/favicon-32x32.png"
+        />
       </head>
       <body className={`${gabaritoFont.variable} antialiased`}>{children}</body>
     </html>
