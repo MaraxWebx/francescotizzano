@@ -14,11 +14,11 @@ export default function Footer() {
 
       {/* Pulsante Email */}
       <a
-        href="mailto:francesco_tizzano@gmail.com"
+        href="mailto:francescotizzano89@gmail.com"
         className=" text-white rounded-full text-xs  flex items-center justify-center   transition"
         title="Email"
       >
-        francesco_tizzano@gmail.com
+        francescotizzano89@gmail.com
       </a>
 
       {/* Pulsante Instagram */}
