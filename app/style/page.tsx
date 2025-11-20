@@ -4,6 +4,7 @@ import Header from "../component/Header";
 import Footer from "../component/Footer";
 import { Canvas } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
+import Image from "next/image";
 
 // 🔹 Componente per caricare e mostrare un modello 3D
 function ModelBox({ url }: { url: string }) {
@@ -45,11 +46,17 @@ export default function Gallery() {
             >
               {/* Se è un’immagine */}
               {item.type === "img" && (
-                <img
-                  src={item.src}
-                  alt={`img-${i}`}
-                  className="w-full h-full object-cover transition-transform duration-500 "
-                />
+                <>
+                  <div className="relative w-full h-full">
+                    <Image
+                      src={item.src}
+                      alt={`img-${i}`}
+                      fill
+                      className="object-cover transition-transform duration-500"
+                      sizes="(max-width: 768px) 50vw, 33vw"
+                    />
+                  </div>
+                </>
               )}
 
               {/* Se è un modello .glb */}
