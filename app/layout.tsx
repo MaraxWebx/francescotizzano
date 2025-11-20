@@ -39,6 +39,32 @@ export default function RootLayout({
           sizes="16x16"
           href="/favicon-16x16.png"
         ></link>
+        <meta
+          property="og:title"
+          content="FrancescoTizzano | Stylist • Art Director • Consultant"
+        />
+        <meta
+          property="og:description"
+          content="Stylist e Art Director a Napoli: trasformo visioni in identità visive forti e riconoscibili, unendo gusto contemporaneo e consulenza creativa mirata."
+        />
+        <meta property="og:image" content="/favicon-32x32.png" />
+        <meta
+          property="og:url"
+          content="https://francescotizzano.vercel.app/"
+        />
+        <meta property="og:type" content="website" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:title"
+          content="FrancescoTizzano | Stylist • Art Director • Consultant"
+        />
+        <meta
+          name="twitter:description"
+          content="Stylist e Art Director a Napoli: trasformo visioni in identità visive forti e riconoscibili."
+        />
+        <meta name="twitter:image" content="/favicon-32x32.png" />
       </head>
       <body className={`${gabaritoFont.variable} antialiased`}>{children}</body>
     </html>
