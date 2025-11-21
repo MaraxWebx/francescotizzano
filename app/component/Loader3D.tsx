@@ -4,23 +4,26 @@ import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { useRef, useEffect, useState } from "react";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { Mesh, Box3, Vector3 } from "three";
+import type { GLTF } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { Mesh, Box3, Vector3, Object3D } from "three";
 
-function useAutoModelLoader(file: string) {
+function useAutoModelLoader(file: string): GLTF | Object3D {
   const ext = file.split(".").pop()?.toLowerCase();
 
   return useLoader(
     ext === "glb" || ext === "gltf" ? GLTFLoader : OBJLoader,
     file
-  );
+  ) as GLTF | Object3D;
 }
 
 function FloatingObj({ file }: { file: string }) {
   const model = useAutoModelLoader(file);
-  const object = (model as any).scene || model; // glb usa scene
+
+  // se GLB → usa model.scene, se OBJ → usa model stesso
+  const object = "scene" in model ? model.scene : model;
+
   const ref = useRef<Mesh>(null!);
 
-  // centra il modello
   useEffect(() => {
     if (ref.current) {
       const box = new Box3().setFromObject(ref.current);
@@ -34,7 +37,7 @@ function FloatingObj({ file }: { file: string }) {
     if (!ref.current) return;
 
     ref.current.rotation.y = Math.sin(state.clock.elapsedTime) * 0.3;
-    ref.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.1) * 0.1;
+    ref.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.5) * 0.1;
 
     const scale = 1 + Math.sin(state.clock.elapsedTime * 1.5) * 0.2;
     ref.current.scale.set(scale, scale, scale);
@@ -49,7 +52,6 @@ export default function Loader3D({ onFinish }: { onFinish: () => void }) {
     "/models/n4.glb",
     "/models/n1.glb",
     "/models/tizzano/mesh_vertex_colors.obj",
-    /*    "/models/n5.glb", */
   ];
 
   const [current, setCurrent] = useState(0);
@@ -68,7 +70,7 @@ export default function Loader3D({ onFinish }: { onFinish: () => void }) {
       clearInterval(interval);
       clearTimeout(timeout);
     };
-  }, [onFinish]);
+  }, [onFinish, files.length]);
 
   return (
     <div className="fixed inset-0 z-50 bg-black flex items-center justify-center">
