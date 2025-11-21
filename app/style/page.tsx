@@ -23,14 +23,67 @@ export default function Gallery() {
   const items = [
     { type: "img", src: "/images/gallery/tizzano-1.jpg" },
     { type: "img", src: "/images/gallery/tizzano-6.jpg" },
-    { type: "img", src: "/images/gallery/tizzano-2.jpg" },
-    /*     { type: "glb", src: "/models/tizzano/tizzano-7.glb" },
-     */ { type: "img", src: "/images/gallery/tizzano-3.jpg" },
-    /*     { type: "glb", src: "/models/tizzano/tizzano-9.glb" },
-     */ { type: "img", src: "/images/gallery/tizzano-4.JPG" },
+    { type: "img", src: "/images/gallery/tizzano-3.jpg" },
+    { type: "img", src: "/images/gallery/tizzano-4.JPG" },
     { type: "img", src: "/images/gallery/tizzano-5.jpg" },
-    /*     { type: "glb", src: "/models/tizzano/tizzano-14.glb" },
-     */ // ...puoi aggiungerne altri fino a 20
+
+    // da 01 a 17
+    { type: "img", src: "/images/gallery/1.jpg" },
+    { type: "img", src: "/images/gallery/2.jpg" },
+    { type: "img", src: "/images/gallery/3.jpg" },
+    { type: "img", src: "/images/gallery/4.jpg" },
+    { type: "img", src: "/images/gallery/5.jpg" },
+    { type: "img", src: "/images/gallery/6.jpg" },
+    { type: "img", src: "/images/gallery/7.jpg" },
+    { type: "img", src: "/images/gallery/8.jpg" },
+    { type: "img", src: "/images/gallery/9.jpg" },
+    { type: "img", src: "/images/gallery/10.jpeg" },
+    { type: "img", src: "/images/gallery/11.JPG" },
+    { type: "img", src: "/images/gallery/12.jpg" },
+    { type: "img", src: "/images/gallery/13.jpg" },
+    { type: "img", src: "/images/gallery/14.jpg" },
+    { type: "img", src: "/images/gallery/15.jpg" },
+    { type: "img", src: "/images/gallery/16.jpg" },
+    { type: "img", src: "/images/gallery/17.jpg" },
+    { type: "img", src: "/images/gallery/18.jpg" },
+    { type: "img", src: "/images/gallery/19.jpg" },
+    { type: "img", src: "/images/gallery/20.jpg" },
+    { type: "img", src: "/images/gallery/21.png" },
+    { type: "img", src: "/images/gallery/22.jpg" },
+    { type: "img", src: "/images/gallery/23.jpg" },
+    { type: "img", src: "/images/gallery/24.jpg" },
+    { type: "img", src: "/images/gallery/25.jpg" },
+    { type: "img", src: "/images/gallery/26.tiff" },
+    { type: "img", src: "/images/gallery/27.tiff" },
+    { type: "img", src: "/images/gallery/28.jpg" },
+    { type: "img", src: "/images/gallery/29.jpg" },
+    { type: "img", src: "/images/gallery/30.jpg" },
+    { type: "img", src: "/images/gallery/31.jpg" },
+    { type: "img", src: "/images/gallery/32.jpg" },
+    { type: "img", src: "/images/gallery/33.jpg" },
+    /*     { type: "img", src: "/images/gallery/34.heic" },
+     */ /*  { type: "img", src: "/images/gallery/35.heic" }, */
+    { type: "img", src: "/images/gallery/36.jpg" },
+    { type: "img", src: "/images/gallery/37.jpg" },
+    { type: "img", src: "/images/gallery/38.jpg" },
+    { type: "img", src: "/images/gallery/39.jpg" },
+    { type: "img", src: "/images/gallery/40.jpg" },
+    { type: "img", src: "/images/gallery/41.jpg" },
+    { type: "img", src: "/images/gallery/42.jpg" },
+    { type: "img", src: "/images/gallery/43.jpg" },
+    { type: "img", src: "/images/gallery/44.jpg" },
+    { type: "img", src: "/images/gallery/45.jpg" },
+    { type: "img", src: "/images/gallery/46.jpg" },
+    /*     { type: "img", src: "/images/gallery/47.jpg" },
+     */ { type: "img", src: "/images/gallery/48.jpg" },
+    { type: "img", src: "/images/gallery/49.jpg" },
+    { type: "img", src: "/images/gallery/50.jpg" },
+    { type: "img", src: "/images/gallery/51.jpg" },
+    { type: "img", src: "/images/gallery/52.jpg" },
+    { type: "img", src: "/images/gallery/53.jpg" },
+    { type: "img", src: "/images/gallery/54.jpg" },
+    { type: "img", src: "/images/gallery/55.jpg" },
+    { type: "img", src: "/images/gallery/56.jpg" },
   ];
 
   return (
@@ -47,12 +100,12 @@ export default function Gallery() {
               {/* Se è un’immagine */}
               {item.type === "img" && (
                 <>
-                  <div className="relative w-full h-full">
+                  <div className="relative w-full h-full text-white">
                     <Image
                       src={item.src}
-                      alt={`img-${i}`}
+                      alt={`img-${item.src}`}
                       fill
-                      className="object-cover transition-transform duration-500"
+                      className="object-cover "
                       sizes="(max-width: 768px) 50vw, 33vw"
                     />
                   </div>
