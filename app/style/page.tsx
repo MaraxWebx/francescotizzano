@@ -91,29 +91,16 @@ export default function Gallery() {
       <Header />
 
       <main className="flex-1 container mx-auto  overflow-hidden">
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-0">
+        <div className="columns-2 sm:columns-3 md:columns-4 gap-2">
           {items.map((item, i) => (
-            <div
-              key={i}
-              className=" h-screen flex items-center justify-center transition duration-300"
-            >
-              {/* Se è un’immagine */}
-              {item.type === "img" && (
-                <>
-                  <div className="relative w-full h-full text-white">
-                    <Image
-                      src={item.src}
-                      alt={`img-${item.src}`}
-                      fill
-                      className="object-cover "
-                      sizes="(max-width: 768px) 50vw, 33vw"
-                    />
-                  </div>
-                </>
-              )}
-
-              {/* Se è un modello .glb */}
-              {item.type === "glb" && <ModelBox url={item.src} />}
+            <div key={i} className="mb-2 break-inside-avoid">
+              <Image
+                src={item.src}
+                alt=""
+                width={600}
+                height={800}
+                className="w-full h-auto object-cover rounded"
+              />
             </div>
           ))}
         </div>
