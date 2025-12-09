@@ -25,8 +25,8 @@ export default function SpotNegativeDraw({ src }: { src: string }) {
     canvas.height = rect.height;
 
     const ctx = canvas.getContext("2d")!;
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
+    ctx.lineCap = "square";
+    ctx.lineJoin = "miter";
     ctx.strokeStyle = "white"; // white → negative under blend mode
     ctx.lineWidth = 40; // brush size
   }, [isClient]);
