@@ -21,11 +21,11 @@ function ModelBox({ url }: { url: string }) {
 export default function Gallery() {
   // 🔹 Array dinamico: ognuno specifica il tipo (img o glb)
   const items = [
-    { type: "img", src: "/images/gallery/tizzano-1.jpg" },
+    /*  { type: "img", src: "/images/gallery/tizzano-1.jpg" }, */
     { type: "img", src: "/images/gallery/tizzano-6.jpg" },
-    { type: "img", src: "/images/gallery/tizzano-3.jpg" },
-    { type: "img", src: "/images/gallery/tizzano-4.JPG" },
-    { type: "img", src: "/images/gallery/tizzano-5.jpg" },
+    /*    { type: "img", src: "/images/gallery/tizzano-3.jpg" },
+    { type: "img", src: "/images/gallery/tizzano-4.JPG" }, */
+    /*    { type: "img", src: "/images/gallery/tizzano-5.jpg" }, */
 
     // da 01 a 17
     { type: "img", src: "/images/gallery/1.jpg" },
@@ -91,7 +91,7 @@ export default function Gallery() {
       <Header />
 
       <main className="flex-1 container mx-auto  overflow-hidden">
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-0">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-0">
           {items.map((item, i) => (
             <div
               key={i}
