@@ -5,7 +5,6 @@ import Footer from "../component/Footer";
 import { Canvas } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import Image from "next/image";
-import SpotNegativeImage from "../component/SpotNegativeImage";
 
 // 🔹 Componente per caricare e mostrare un modello 3D
 function ModelBox({ url }: { url: string }) {
@@ -64,7 +63,7 @@ export default function Gallery() {
     { type: "img", src: "/images/gallery/33.jpg" },
     /*     { type: "img", src: "/images/gallery/34.heic" },
      */ /*  { type: "img", src: "/images/gallery/35.heic" }, */
-    { type: "img", src: "/images/gallery/36.jpg" },
+    { type: "img", src: "/images/gallery/36.JPG" },
     { type: "img", src: "/images/gallery/37.jpg" },
     { type: "img", src: "/images/gallery/38.jpg" },
     { type: "img", src: "/images/gallery/39.jpg" },
@@ -94,11 +93,14 @@ export default function Gallery() {
       <main className="flex-1 container mx-auto  overflow-hidden">
         <div className="columns-2 sm:columns-3 md:columns-4 gap-2">
           {items.map((item, i) => (
-            <div
-              key={i}
-              className="mb-2 break-inside-avoid rounded-lg overflow-hidden"
-            >
-              <SpotNegativeImage src={item.src} />
+            <div key={i} className="mb-2 break-inside-avoid">
+              <Image
+                src={item.src}
+                alt=""
+                width={600}
+                height={800}
+                className="w-full h-auto object-cover rounded"
+              />
             </div>
           ))}
         </div>
