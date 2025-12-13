@@ -9,14 +9,14 @@ export default function Header() {
   const isGallery = pathname === "/style";
 
   return (
-    <header className="fixed top-0 left-0 w-full flex justify-between p-6 z-50 bg-transparent">
+    <header className="fixed top-0 left-0 w-full flex justify-between p-6 z-50 bg-transparent items-center">
       {isGallery ? (
         // 🔹 Se sei nella pagina gallery → mostra "Back"
         <Link
           href="/"
-          className="text-white text-2xl tracking-wide transform transition-all duration-500 ease-in-out hover:rotate-360 hover:scale-110 hover:opacity-80"
+          className="text-white text-2xl tracking-wide transform  rotate-180 transition-all duration-500 ease-in-out hover:rotate-360 hover:scale-110 hover:opacity-80"
         >
-          ←
+          ➝
         </Link>
       ) : (
         // 🔹 Se sei in home (o altrove) → mostra "Style"
