@@ -41,7 +41,7 @@ export default function Gallery() {
     { type: "img", src: "/images/gallery/11.JPG" },
     { type: "img", src: "/images/gallery/12.jpg" },
     { type: "img", src: "/images/gallery/13.jpg" },
-    { type: "img", src: "/images/gallery/14.png" },
+    { type: "img", src: "/images/gallery/14.jpg" },
     { type: "img", src: "/images/gallery/15.jpg" },
     { type: "img", src: "/images/gallery/16.jpg" },
     { type: "img", src: "/images/gallery/17.jpg" },
