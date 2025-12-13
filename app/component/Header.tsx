@@ -14,9 +14,9 @@ export default function Header() {
         // 🔹 Se sei nella pagina gallery → mostra "Back"
         <Link
           href="/"
-          className="text-white text-2xl tracking-wide transform transition-all duration-500 ease-in-out hover:rotate-90 hover:scale-110 hover:opacity-80"
+          className="text-white text-2xl tracking-wide transform transition-all duration-500 ease-in-out hover:rotate-360 hover:scale-110 hover:opacity-80"
         >
-          X
+          ←
         </Link>
       ) : (
         // 🔹 Se sei in home (o altrove) → mostra "Style"
