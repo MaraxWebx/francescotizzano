@@ -37,6 +37,15 @@ export default function Footer() {
         >
           @francescotizzano
         </a>
+        <a
+          href="https://www.instagram.com/marettax_/?hl=it"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-white text-xs opacity-80 hover:opacity-100 transition-opacity"
+          style={{ fontSize: 8 }}
+        >
+          ❤️☠️Marettax
+        </a>
       </div>
     </div>
   );
