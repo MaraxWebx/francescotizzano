@@ -25,7 +25,7 @@ export default function Gallery() {
     // da 01 a 17
     { type: "img", src: "/images/gallery/57.jpg" },
     { type: "img", src: "/images/gallery/58.jpg" },
-    { type: "img", src: "/images/gallery/59jpg" },
+    { type: "img", src: "/images/gallery/59.jpg" },
     { type: "img", src: "/images/gallery/90.jpg" },
     { type: "img", src: "/images/gallery/0.jpg" },
 
