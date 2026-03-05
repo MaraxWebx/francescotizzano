@@ -221,6 +221,14 @@ function ScrollingText({ hit }: { hit: number }) {
 export default function BioScene() {
   const [hit, setHit] = useState(0);
 
+  useEffect(() => {
+    const original = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = original;
+    };
+  }, []);
   return (
     <div className="h-screen w-screen bg-black">
       <Canvas
