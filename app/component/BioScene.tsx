@@ -1,7 +1,7 @@
 "use client";
 
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
-import { Text } from "@react-three/drei";
+import { Environment, Text } from "@react-three/drei";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 import { GLTFLoader, type GLTF } from "three/examples/jsm/loaders/GLTFLoader";
@@ -13,16 +13,15 @@ import * as THREE from "three";
 function useAutoModel(file: string): THREE.Object3D {
   const ext = useMemo(() => file.split(".").pop()?.toLowerCase(), [file]);
 
-const loaded = useLoader(
-  ext === "glb" || ext === "gltf" ? GLTFLoader : OBJLoader,
-  file
-) as GLTF | THREE.Object3D;
+  const loaded = useLoader(
+    ext === "glb" || ext === "gltf" ? GLTFLoader : OBJLoader,
+    file,
+  ) as GLTF | THREE.Object3D;
 
-if ((loaded as GLTF).scene) {
-  return (loaded as GLTF).scene;
+  return (loaded as any).scene
+    ? (loaded as GLTF).scene
+    : (loaded as THREE.Object3D);
 }
-
-return loaded as THREE.Object3D;
 
 /* =========================
    MODELLO (NO OVERRIDE)
@@ -48,29 +47,21 @@ function Model({ file, hit }: { file: string; hit: number }) {
     // 🔥 SCALE FORZATO
     ref.current.scale.set(2.5, 2.5, 2.5);
   }, [object]);
-  useFrame((state) => {
+
+  useFrame((state, delta) => {
     if (!ref.current) return;
 
-    const { x, y } = state.pointer;
-
-    // rotazione base
     ref.current.rotation.y += 0.008;
 
-    // rotazione guidata dal cursore
-    ref.current.rotation.x = THREE.MathUtils.lerp(
-      ref.current.rotation.x,
-      y * 0.8,
-      0.08,
-    );
-
-    ref.current.rotation.z = THREE.MathUtils.lerp(
-      ref.current.rotation.z,
-      -x * 0.8,
-      0.08,
-    );
-
-    // impulso quando clicchi
     if (impulse.current > 0.001) {
+      // shake
+      ref.current.rotation.x =
+        Math.sin(state.clock.elapsedTime * 20) * 0.2 * impulse.current;
+
+      ref.current.rotation.z =
+        Math.sin(state.clock.elapsedTime * 18) * 0.2 * impulse.current;
+
+      // piccolo bounce
       ref.current.position.y =
         -1.2 + Math.sin(state.clock.elapsedTime * 25) * 0.25 * impulse.current;
 
@@ -93,41 +84,7 @@ function fadeByY(y: number, min: number, max: number) {
 /* =========================
    TESTO
 ========================= */
-function ScrollingTexts() {
-  const ref = useRef<THREE.Mesh>(null!);
-  useFrame((_, delta) => {
-    if (!ref.current) return;
-    ref.current.position.y += delta * 0.3;
-    if (ref.current.position.y > 2) {
-      ref.current.position.y = -2;
-    }
-    const opacity = fadeByY(ref.current.position.y, -1.6, 1.6);
-    const material = ref.current.material as THREE.MeshBasicMaterial;
-    material.opacity = opacity;
-    material.transparent = true;
-  });
-  return (
-    <Text
-      ref={ref}
-      position={[0, -2, -3]}
-      fontSize={0.2}
-      color="#ffffff"
-      maxWidth={4}
-      textAlign="center"
-      anchorX="center"
-      anchorY="middle"
-    >
-      F̷R̷A̷N̷C̷E̷S̷C̷O̷ T̷I̷Z̷Z̷A̷N̷O̷F̷R̷A̷N̷C̷E̷S̷C̷O̷ T̷I̷Z̷Z̷A̷N̷O̷F̷R̷A̷N̷C̷E̷S̷C̷O̷ T̷I̷Z̷Z̷A̷N̷O̷F̷R̷A̷N̷C̷E̷S̷C̷O̷
-      T̷I̷Z̷Z̷A̷N̷O̷F̷R̷A̷N̷C̷E̷S̷C̷O̷ T̷I̷Z̷Z̷A̷N̷O̷F̷R̷A̷N̷C̷E̷S̷C̷O̷ T̷I̷Z̷Z̷A̷N̷O̷F̷R̷A̷N̷C̷E̷S̷C̷O̷ T̷I̷Z̷Z̷A̷N̷O̷F̷R̷A̷N̷C̷E̷S̷C̷O̷
-      T̷I̷Z̷Z̷A̷N̷O̷F̷R̷A̷N̷C̷E̷S̷C̷O̷ T̷I̷Z̷Z̷A̷N̷O̷F̷R̷A̷N̷C̷E̷S̷C̷O̷ T̷I̷Z̷Z̷A̷N̷O̷F̷R̷A̷N̷C̷E̷S̷C̷O̷ T̷I̷Z̷Z̷A̷N̷O̷F̷R̷A̷N̷C̷E̷S̷C̷O̷
-      T̷I̷Z̷Z̷A̷N̷O̷F̷R̷A̷N̷C̷E̷S̷C̷O̷ T̷I̷Z̷Z̷A̷N̷O̷F̷R̷A̷N̷C̷E̷S̷C̷O̷ T̷I̷Z̷Z̷A̷N̷O̷F̷R̷A̷N̷C̷E̷S̷C̷O̷ T̷I̷Z̷Z̷A̷N̷O̷F̷R̷A̷N̷C̷E̷S̷C̷O̷
-      T̷I̷Z̷Z̷A̷N̷O̷F̷R̷A̷N̷C̷E̷S̷C̷O̷ T̷I̷Z̷Z̷A̷N̷O̷F̷R̷A̷N̷C̷E̷S̷C̷O̷ T̷I̷Z̷Z̷A̷N̷O̷F̷R̷A̷N̷C̷E̷S̷C̷O̷ T̷I̷Z̷Z̷A̷N̷O̷F̷R̷A̷N̷C̷E̷S̷C̷O̷
-      T̷I̷Z̷Z̷A̷N̷O̷F̷R̷A̷N̷C̷E̷S̷C̷O̷ T̷I̷Z̷Z̷A̷N̷O̷F̷R̷A̷N̷C̷E̷S̷C̷O̷ T̷I̷Z̷Z̷A̷N̷O̷F̷R̷A̷N̷C̷E̷S̷C̷O̷ T̷I̷Z̷Z̷A̷N̷O̷F̷R̷A̷N̷C̷E̷S̷C̷O̷
-      T̷I̷Z̷Z̷A̷N̷O̷F̷R̷A̷N̷C̷E̷S̷C̷O̷ T̷I̷Z̷Z̷A̷N̷O̷F̷R̷A̷N̷C̷E̷S̷C̷O̷ T̷I̷Z̷Z̷A̷N̷O̷T̷I̷Z̷Z̷A̷N̷O̷F̷R̷A̷N̷C̷E̷S̷C̷O̷ T̷I̷Z̷Z̷A̷N̷O̷F̷R̷A̷N̷C̷E̷S̷C̷O̷
-      T̷I̷Z̷Z̷A̷N̷O̷{" "}
-    </Text> /* <Text ref={ref} position={[0, -2, -3]} fontSize={0.2} color="#ffffff" maxWidth={4} textAlign="center" anchorX="center" anchorY="middle" > Stylist e Art Director con base tra moda, immagine e cultura visiva contemporanea. Il suo lavoro nasce dall’incontro tra estetica editoriale, ricerca concettuale e sensibilità narrativa, con un approccio che fonde rigore visivo e istinto creativo. Ha collaborato con brand, artisti e creativi sviluppando identità visive, styling per progetti editoriali, campagne e consulenze d’immagine. Il suo linguaggio attraversa moda, arte e design, esplorando silhouette, texture e simboli come strumenti di racconto. Ogni progetto è pensato come un sistema coerente, dove immagine, corpo e spazio dialogano in equilibrio tra sperimentazione e raffinatezza. Attento ai dettagli e alla direzione creativa complessiva, lavora per costruire visioni riconoscibili, essenziali e senza tempo. </Text> */
-  );
-}
+
 function ScrollingText({ hit }: { hit: number }) {
   const ref = useRef<THREE.Mesh>(null!);
   const impulse = useRef(0);
