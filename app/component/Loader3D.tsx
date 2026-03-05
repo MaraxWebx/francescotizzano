@@ -12,7 +12,7 @@ function useAutoModelLoader(file: string): GLTF | Object3D {
 
   return useLoader(
     ext === "glb" || ext === "gltf" ? GLTFLoader : OBJLoader,
-    file
+    file,
   ) as GLTF | Object3D;
 }
 
