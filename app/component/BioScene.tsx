@@ -120,7 +120,104 @@ function MatrixText({ hit }: { hit: number }) {
 /* =========================
    SCENE
 ========================= */
+/* function ScrollingText({ hit }: { hit: number }) {
+  const ref = useRef<THREE.Mesh>(null!);
+  const impulse = useRef(0);
 
+  useEffect(() => {
+    impulse.current = 1;
+  }, [hit]);
+
+  useFrame((state, delta) => {
+    if (!ref.current) return;
+
+    ref.current.position.y += delta * 0.3;
+
+    if (ref.current.position.y > 2) {
+      ref.current.position.y = -2;
+    }
+
+    if (impulse.current > 0.001) {
+      ref.current.rotation.z =
+        Math.sin(state.clock.elapsedTime * 20) * 0.25 * impulse.current;
+
+      ref.current.position.x =
+        Math.sin(state.clock.elapsedTime * 15) * 0.4 * impulse.current;
+
+      impulse.current *= 0.9;
+    }
+  });
+
+  return (
+    <Text
+      ref={ref}
+      position={[0, -2, -2.8]}
+      fontSize={0.2}
+      color="#ffffff"
+      maxWidth={4}
+      textAlign="left"
+      anchorX="left"
+      anchorY="middle"
+    >
+      Stylist e Art Director con base tra moda, immagine e cultura visiva
+      contemporanea. Il suo lavoro nasce dall’incontro tra estetica editoriale,
+      ricerca concettuale e sensibilità narrativa.
+    </Text>
+  );
+} */
+function ScrollingText({ hit }: { hit: number }) {
+  const ref = useRef<THREE.Mesh>(null!);
+  const impulse = useRef(0);
+
+  useEffect(() => {
+    impulse.current = 1;
+  }, [hit]);
+
+  useFrame((state, delta) => {
+    if (!ref.current) return;
+
+    ref.current.position.y += delta * 0.3;
+
+    if (ref.current.position.y > 2) {
+      ref.current.position.y = -2;
+    }
+
+    if (impulse.current > 0.001) {
+      ref.current.rotation.z =
+        Math.sin(state.clock.elapsedTime * 20) * 0.25 * impulse.current;
+
+      ref.current.position.x =
+        Math.sin(state.clock.elapsedTime * 15) * 0.4 * impulse.current;
+
+      impulse.current *= 0.9;
+    }
+  });
+
+  return (
+    <Text
+      ref={ref}
+      position={[0, -2, -3]}
+      fontSize={0.2}
+      color="#ffffff"
+      maxWidth={2}
+      textAlign="left"
+      anchorX="left"
+      anchorY="middle"
+    >
+      ⣶⡿⢟⣫⣽⣶⣶⡿⣿⣿⣶⣶⣦⣭⣙⠺⢼⣾⡿⢋⣴⣿⣿⣿⣿⣿⣷ ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡙⢿⣿⣧ ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡙⢿⣿⣧ ⣴⣿⣿⣿⣿⣿⣷
+      ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡙⢿⣿⣧ ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡙⢿⣿⣧⣴⣿⣿⣿⣿⣿⣷ ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡙⢿⣿⣧⣿⣷
+      ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡙⢿⣿⣧ ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡙⢿⣿⣧⣴⣿⣿⣿⣿⣿⣷ ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡙⢿⣿⣧
+      ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡙⢿⣿⣧⣿⣷ ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡙⢿⣿⣧ ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡙⢿⣿⣧⣴⣿⣿⣿⣿⣿⣷
+      ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡙⢿⣿⣧ ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡙⢿⣿⣧⣿⣷ ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡙⢿⣿⣧
+      ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡙⢿⣿⣧⣴⣿⣿⣿⣿⣿⣷ ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡙⢿⣿⣧ ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡙⢿⣿⣧
+      ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡙⢿⣿⣧⣴⣿⣿⣿⣿⣿⣷ ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡙⢿⣿⣧ ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡙⢿⣿⣧ ⣴⣿⣿⣿⣿⣿⣷
+      ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡙⢿⣿⣧ ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡙⢿⣿⣧⣴⣿⣿⣿⣿⣿⣷ ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡙⢿⣿⣧⣴⣿⣿⣿⣿⣿⣷
+      ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡙⢿⣿⣧⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡙⢿⣿⣧⣴⣿⣿⣿⣿⣿⣷ ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡙⢿⣿⣧ ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡙⢿⣿⣧
+      ⣴⣿⣿⣿⣿⣿⣷ ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡙⢿⣿⣧ ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡙⢿⣿⣧⣴⣿⣿⣿⣿⣿⣷ ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡙⢿⣿⣧
+      ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡙⢿⣿⣧⣴⣿⣿⣿⣿⣿⣷ ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡙⢿⣿⣧ ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡙⢿⣿⣧
+    </Text>
+  );
+}
 export default function BioScene() {
   const [hit, setHit] = useState(0);
 
@@ -132,8 +229,9 @@ export default function BioScene() {
       >
         <ambientLight intensity={0.3} />
         <directionalLight position={[5, 5, 5]} />
-
+        <ScrollingText hit={hit} />
         <MatrixText hit={hit} />
+
         <Model hit={hit} />
       </Canvas>
     </div>
