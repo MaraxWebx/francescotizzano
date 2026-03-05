@@ -22,12 +22,13 @@ export default function Gallery() {
   // 🔹 Array dinamico: ognuno specifica il tipo (img o glb)
   const items = [
     /*  { type: "img", src: "/images/gallery/tizzano-1.jpg" }, */
-    { type: "img", src: "/images/gallery/tizzano-6.jpg" },
-    /*    { type: "img", src: "/images/gallery/tizzano-3.jpg" },
-    { type: "img", src: "/images/gallery/tizzano-4.JPG" }, */
-    /*    { type: "img", src: "/images/gallery/tizzano-5.jpg" }, */
-
     // da 01 a 17
+    { type: "img", src: "/images/gallery/57.jpg" },
+    { type: "img", src: "/images/gallery/58.jpg" },
+    { type: "img", src: "/images/gallery/59jpg" },
+    { type: "img", src: "/images/gallery/90.jpg" },
+    { type: "img", src: "/images/gallery/0.jpg" },
+
     { type: "img", src: "/images/gallery/1.jpg" },
     { type: "img", src: "/images/gallery/2.jpg" },
     { type: "img", src: "/images/gallery/3.jpg" },
@@ -38,7 +39,7 @@ export default function Gallery() {
     { type: "img", src: "/images/gallery/8.jpg" },
     { type: "img", src: "/images/gallery/9.jpg" },
     { type: "img", src: "/images/gallery/10.jpeg" },
-    { type: "img", src: "/images/gallery/11.JPG" },
+    { type: "img", src: "/images/gallery/11.jpg" },
     { type: "img", src: "/images/gallery/12.jpg" },
     { type: "img", src: "/images/gallery/13.jpg" },
     { type: "img", src: "/images/gallery/14.jpg" },
