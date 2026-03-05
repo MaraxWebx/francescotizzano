@@ -1,7 +1,7 @@
 "use client";
 
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
-import { Environment, Text } from "@react-three/drei";
+import { Text } from "@react-three/drei";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 import { GLTFLoader, type GLTF } from "three/examples/jsm/loaders/GLTFLoader";
@@ -13,15 +13,16 @@ import * as THREE from "three";
 function useAutoModel(file: string): THREE.Object3D {
   const ext = useMemo(() => file.split(".").pop()?.toLowerCase(), [file]);
 
-  const loaded = useLoader(
-    ext === "glb" || ext === "gltf" ? GLTFLoader : OBJLoader,
-    file,
-  ) as GLTF | THREE.Object3D;
+const loaded = useLoader(
+  ext === "glb" || ext === "gltf" ? GLTFLoader : OBJLoader,
+  file
+) as GLTF | THREE.Object3D;
 
-  return (loaded as any).scene
-    ? (loaded as GLTF).scene
-    : (loaded as THREE.Object3D);
+if ((loaded as GLTF).scene) {
+  return (loaded as GLTF).scene;
 }
+
+return loaded as THREE.Object3D;
 
 /* =========================
    MODELLO (NO OVERRIDE)
@@ -47,7 +48,7 @@ function Model({ file, hit }: { file: string; hit: number }) {
     // 🔥 SCALE FORZATO
     ref.current.scale.set(2.5, 2.5, 2.5);
   }, [object]);
-  useFrame((state, delta) => {
+  useFrame((state) => {
     if (!ref.current) return;
 
     const { x, y } = state.pointer;
