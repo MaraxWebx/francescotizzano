@@ -16,20 +16,6 @@ export default function Footer() {
       {/* DESTRA — CONTATTI */}
       <div className="flex flex-col md:flex-row gap-2 md:gap-4 items-end">
         <a
-          href="tel:+393484713563"
-          className="text-white text-xs opacity-80 hover:opacity-100 transition-opacity"
-        >
-          +39 348 471 3563
-        </a>
-
-        <a
-          href="mailto:francescotizzano89@gmail.com"
-          className="text-white text-xs opacity-80 hover:opacity-100 transition-opacity"
-        >
-          francescotizzano89@gmail.com
-        </a>
-
-        <a
           href="https://www.instagram.com/francescotizzano/"
           target="_blank"
           rel="noopener noreferrer"
@@ -37,6 +23,19 @@ export default function Footer() {
         >
           @francescotizzano
         </a>
+        <a
+          href="mailto:francescotizzano89@gmail.com"
+          className="text-white text-xs opacity-80 hover:opacity-100 transition-opacity"
+        >
+          francescotizzano89@gmail.com
+        </a>
+        <a
+          href="tel:+393484713563"
+          className="text-white text-xs opacity-80 hover:opacity-100 transition-opacity"
+        >
+          +39 348 471 3563
+        </a>
+
         <a
           href="https://www.instagram.com/marettax_/?hl=it"
           target="_blank"
