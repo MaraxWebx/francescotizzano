@@ -176,10 +176,12 @@ function ScrollingText({ hit }: { hit: number }) {
   useFrame((state, delta) => {
     if (!ref.current) return;
 
-    ref.current.position.y += delta * 0.3;
+    ref.current.position.y += delta * 0.6;
+    ref.current.position.x += delta * 0.4;
 
     if (ref.current.position.y > 2) {
       ref.current.position.y = -2;
+      ref.current.position.x = -2;
     }
 
     if (impulse.current > 0.001) {
@@ -196,7 +198,7 @@ function ScrollingText({ hit }: { hit: number }) {
   return (
     <Text
       ref={ref}
-      position={[0, -2, -3]}
+      position={[-3.5, -2, -3]} // ← spostato a sinistra
       fontSize={0.2}
       color="#ffffff"
       maxWidth={2}
