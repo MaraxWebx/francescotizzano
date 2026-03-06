@@ -54,8 +54,7 @@ export default function Gallery() {
     { type: "img", src: "/images/gallery/23.jpg" },
     { type: "img", src: "/images/gallery/24.jpg" },
     { type: "img", src: "/images/gallery/25.jpg" },
-    { type: "img", src: "/images/gallery/26.tiff" },
-    { type: "img", src: "/images/gallery/27.tiff" },
+
     { type: "img", src: "/images/gallery/28.jpg" },
     { type: "img", src: "/images/gallery/29.jpg" },
     { type: "img", src: "/images/gallery/30.jpg" },
