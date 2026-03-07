@@ -25,7 +25,7 @@ export default function Gallery() {
     // da 01 a 17
     { type: "img", src: "/images/gallery/57.jpg" },
     { type: "img", src: "/images/gallery/58.jpg" },
-    { type: "img", src: "/images/gallery/59.jpg" },
+
     { type: "img", src: "/images/gallery/90.jpg" },
     { type: "img", src: "/images/gallery/0.jpg" },
 
@@ -38,9 +38,10 @@ export default function Gallery() {
     { type: "img", src: "/images/gallery/7.jpg" },
     { type: "img", src: "/images/gallery/8.jpg" },
     { type: "img", src: "/images/gallery/9.jpg" },
+    { type: "img", src: "/images/gallery/59.jpg" },
     { type: "img", src: "/images/gallery/10.jpeg" },
-    { type: "img", src: "/images/gallery/11.jpg" },
-    { type: "img", src: "/images/gallery/12.jpg" },
+    /*     { type: "img", src: "/images/gallery/11.jpg" },
+     */ { type: "img", src: "/images/gallery/12.jpg" },
     { type: "img", src: "/images/gallery/13.jpg" },
     { type: "img", src: "/images/gallery/14.jpg" },
     { type: "img", src: "/images/gallery/15.jpg" },
