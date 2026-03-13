@@ -26,9 +26,9 @@ function Model({ hit }: { hit: number }) {
     box.getCenter(center);
 
     ref.current.position.sub(center);
-    ref.current.position.y -= 1.2;
+    ref.current.position.y -= 4;
 
-    ref.current.scale.set(2.5, 2.5, 2.5);
+    ref.current.scale.set(1, 1, 1);
   }, []);
 
   useFrame((state) => {
@@ -175,11 +175,11 @@ function MatrixText({ hit }: { hit: number }) {
     .split(/\s+/)
     .filter(Boolean);
 
-  const columns = 30;
+  const columns = 1;
 
   useEffect(() => {
     speeds.current = Array.from({ length: columns }).map(
-      () => 2 + Math.random() * 1,
+      () => 0.5 + Math.random() * 0.5,
     );
   }, []);
 
@@ -208,13 +208,14 @@ function MatrixText({ hit }: { hit: number }) {
         <Text
           key={i}
           ref={(el) => (refs.current[i] = el!)}
-          position={[(i - columns / 2) * 0.35, Math.random() * 4 - 2, -3]}
-          fontSize={0.15}
+          position={[-2 + (i - columns / 2) * 0.35, Math.random() * 4 - 2, -3]}
+          fontSize={0.1}
+          maxWidth={0.2}
           color="#ffffff"
           anchorX="center"
           anchorY="middle"
         >
-          {words[Math.floor(Math.random() * words.length)]}
+          {text}
         </Text>
       ))}
     </>
@@ -224,7 +225,15 @@ function MatrixText({ hit }: { hit: number }) {
 /* =========================
    SCENE
 ========================= */
-function ScrollingText({ hit }: { hit: number }) {
+function ScrollingText({
+  hit,
+  wheelRef,
+  touchRef,
+}: {
+  hit: number;
+  wheelRef: React.MutableRefObject<number>;
+  touchRef: React.MutableRefObject<number>;
+}) {
   const ref = useRef<THREE.Mesh>(null!);
   const impulse = useRef(0);
 
@@ -235,7 +244,13 @@ function ScrollingText({ hit }: { hit: number }) {
   useFrame((state, delta) => {
     if (!ref.current) return;
 
-    ref.current.position.y += delta * 0.3;
+    const wheel = wheelRef.current;
+    wheelRef.current = 0;
+
+    const touch = touchRef.current;
+    touchRef.current = 0;
+
+    ref.current.position.y += delta * 0.3 - wheel * 0.0001 - touch * 0.001;
 
     if (ref.current.position.y > 2) {
       ref.current.position.y = -2;
@@ -286,6 +301,9 @@ function ScrollingText({ hit }: { hit: number }) {
 
 export default function BioScene() {
   const [hit, setHit] = useState(0);
+  const wheelRef = useRef(0);
+  const touchRef = useRef(0);
+  const touchStartY = useRef(0);
 
   useEffect(() => {
     const original = document.body.style.overflow;
@@ -300,10 +318,22 @@ export default function BioScene() {
       <Canvas
         camera={{ position: [0, 0, 6], fov: 50 }}
         onPointerDown={() => setHit((h) => h + 1)}
+        onWheel={(e) => {
+          wheelRef.current += e.deltaY;
+        }}
+        onTouchStart={(e) => {
+          touchStartY.current = e.touches[0].clientY;
+        }}
+        onTouchMove={(e) => {
+          const currentY = e.touches[0].clientY;
+          const deltaY = currentY - touchStartY.current;
+          touchRef.current += deltaY;
+          touchStartY.current = currentY;
+        }}
       >
         <ambientLight intensity={0.3} />
         <directionalLight position={[5, 5, 5]} />
-        <ScrollingText hit={hit} />
+        <ScrollingText hit={hit} wheelRef={wheelRef} touchRef={touchRef} />
         <MatrixText hit={hit} />
 
         <Model hit={hit} />
