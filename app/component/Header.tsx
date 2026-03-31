@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 export default function Header() {
   const pathname = usePathname(); // legge il path corrente
 
-  const isGallery = pathname === "/style" || pathname === "/profile"; // verifica se siamo nella pagina gallery
+  const isGallery = pathname === "/style";
 
   return (
     <header className="fixed top-0 left-0 w-full flex justify-between p-6 z-50 bg-transparent items-center">

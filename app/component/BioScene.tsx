@@ -26,9 +26,9 @@ function Model({ hit }: { hit: number }) {
     box.getCenter(center);
 
     ref.current.position.sub(center);
-    ref.current.position.y -= 4;
+    ref.current.position.y -= 1.2;
 
-    ref.current.scale.set(1, 1, 1);
+    ref.current.scale.set(2.5, 2.5, 2.5);
   }, []);
 
   useFrame((state) => {
@@ -148,26 +148,11 @@ function MatrixText({ hit }: { hit: number }) {
   }, [hit]);
 
   const text = `
-  Francesco Tizzano è uno stylist napoletano o di base a napoli
-  indipendente che ha scelto di lavorare fuori dalle dinamiche mainstream
-  allontanandosi dai circuiti standardizzati della moda e dalle sue logiche
-  economiche Rifiutando di riprodurre pedissequamente modelli chiusi e
-  gerarchie di visibilità dove tutto ciò che nasce in periferia o fuori dal
-  centro del mercato viene letto come derivato secondario o semplicemente
-  escluso il suo lavoro parte invece dal basso l’occhio si incastra nella
-  strada nella radice nei contesti in cui le trasformazioni avvengono prima
-  di essere riconosciute come linguaggio Se la struttura sociale è
-  testimoniata da chi la vive la moda non fa eccezione sono i corpi reali
-  gli ambienti quotidiani le situazioni non codificate a essere i primi
-  testimoni dei cambiamenti nelle rappresentazioni sociali e nel mondo che
-  ci circonda Le immagini di Tizzano nascono da ciò che esiste già da ciò
-  che si muove ai margini da ciò che non è ancora stato assorbito dal
-  linguaggio del mercato Lo styling diventa un’invenzione un artefatto
-  che si costruisce assemblandosi e che allo stesso tempo porta alla luce
-  ciò che resta invisibile nelle rappresentazioni dominanti fino a
-  spettacolarizzare il dettaglio già presente nel quotidiano Ogni corpo
-  ogni fenomeno ogni briciola di vivente contiene un potenziale di eccelso
-  una materia scintillante e trasformabile apertura con slancio al futuro
+Francesco Tizzano è uno stylist indipendente di Napoli, con una lunga esperienza nel mondo della moda, da cui nasce un percorso personale che si sviluppa come ampliamento delle possibilità dello styling e come apertura verso nuovi contesti, nuovi corpi e nuovi spazi di ricerca, dentro e attorno alle dinamiche del settore e alle sue logiche economiche.
+Integrando alla pratica della moda elementi che nascono anche fuori dai circuiti più standardizzati, il suo lavoro si costruisce a partire dal basso: l’occhio si incastra nella strada, nella radice, nei contesti in cui le trasformazioni avvengono prima di essere riconosciute come linguaggio, dove tutto ciò che nasce in periferia o fuori dal centro del mercato viene spesso letto come derivato, secondario. 
+Se la struttura sociale è testimoniata da chi la vive, la moda non fa eccezione: sono i corpi reali, gli ambienti quotidiani, le situazioni non codificate a essere i primi testimoni dei cambiamenti nelle rappresentazioni sociali e nel mondo che ci circonda.
+Le immagini di Tizzano nascono da ciò che esiste già, da ciò che si muove ai margini, da ciò che non è ancora stato assorbito dal linguaggio del mercato.
+Lo styling diventa un’invenzione, un artefatto che si costruisce assemblandosi, e che allo stesso tempo porta alla luce ciò che resta invisibile nelle rappresentazioni dominanti, fino a spettacolarizzare il dettaglio già presente nel quotidiano. Ogni corpo, ogni fenomeno, ogni briciola di vivente contiene un potenziale di eccelso, una materia scintillante e trasformabile. Il lavoro si sviluppa come apertura verso nuove possibilità di costruzione dell’immagine, in una direzione che guarda al futuro come spazio di trasformazione, ricerca e collaborazione, mantenendo lo styling come pratica viva, in continua evoluzione.
   `;
 
   const words = text
@@ -175,11 +160,11 @@ function MatrixText({ hit }: { hit: number }) {
     .split(/\s+/)
     .filter(Boolean);
 
-  const columns = 1;
+  const columns = 30;
 
   useEffect(() => {
     speeds.current = Array.from({ length: columns }).map(
-      () => 0.5 + Math.random() * 0.5,
+      () => 2 + Math.random() * 1,
     );
   }, []);
 
@@ -208,14 +193,13 @@ function MatrixText({ hit }: { hit: number }) {
         <Text
           key={i}
           ref={(el) => (refs.current[i] = el!)}
-          position={[-2 + (i - columns / 2) * 0.35, Math.random() * 4 - 2, -3]}
-          fontSize={0.1}
-          maxWidth={0.2}
+          position={[(i - columns / 2) * 0.35, Math.random() * 4 - 2, -3]}
+          fontSize={0.15}
           color="#ffffff"
           anchorX="center"
           anchorY="middle"
         >
-          {text}
+          {words[Math.floor(Math.random() * words.length)]}
         </Text>
       ))}
     </>
@@ -225,15 +209,7 @@ function MatrixText({ hit }: { hit: number }) {
 /* =========================
    SCENE
 ========================= */
-function ScrollingText({
-  hit,
-  wheelRef,
-  touchRef,
-}: {
-  hit: number;
-  wheelRef: React.MutableRefObject<number>;
-  touchRef: React.MutableRefObject<number>;
-}) {
+function ScrollingText({ hit }: { hit: number }) {
   const ref = useRef<THREE.Mesh>(null!);
   const impulse = useRef(0);
 
@@ -244,13 +220,7 @@ function ScrollingText({
   useFrame((state, delta) => {
     if (!ref.current) return;
 
-    const wheel = wheelRef.current;
-    wheelRef.current = 0;
-
-    const touch = touchRef.current;
-    touchRef.current = 0;
-
-    ref.current.position.y += delta * 0.3 - wheel * 0.0001 - touch * 0.001;
+    ref.current.position.y += delta * 0.3;
 
     if (ref.current.position.y > 2) {
       ref.current.position.y = -2;
@@ -275,35 +245,38 @@ function ScrollingText({
       anchorX="center"
       anchorY="middle"
     >
-      Francesco Tizzano è uno stylist * napoletano o di base a napoli
-      indipendente che ha scelto di lavorare fuori dalle dinamiche mainstream,
-      *allontanandosi dai circuiti standardizzati della moda e dalle sue logiche
-      economiche. *Rifiutando di riprodurre pedissequamente modelli chiusi e
-      gerarchie di visibilità, dove tutto ciò che nasce in periferia o fuori dal
-      centro del mercato viene letto come derivato, secondario o semplicemente
-      *escluso, il suo lavoro parte invece dal basso: l’occhio si incastra nella
-      strada, nella radice, nei contesti in cui le trasformazioni avvengono
-      prima di essere riconosciute come linguaggio. Se la struttura sociale è
-      testimoniata da chi la vive, la moda non fa eccezione: sono i corpi reali,
-      gli ambienti quotidiani, le situazioni non codificate a essere i primi
-      testimoni dei cambiamenti nelle rappresentazioni sociali e nel mondo che
-      ci circonda. Le immagini di Tizzano nascono da ciò che esiste già, da ciò
-      che si muove ai margini, da ciò che non è ancora stato assorbito dal
-      linguaggio del mercato. Lo styling diventa un’invenzione, un artefatto che
-      si costruisce assemblandosi, e che allo stesso tempo porta alla luce ciò
-      che resta invisibile nelle rappresentazioni dominanti, fino a
-      spettacolarizzare il dettaglio già presente nel quotidiano. Ogni corpo,
+      Francesco Tizzano è uno stylist indipendente di Napoli, con una lunga
+      esperienza nel mondo della moda, da cui nasce un percorso personale che si
+      sviluppa come ampliamento delle possibilità dello styling e come apertura
+      verso nuovi contesti, nuovi corpi e nuovi spazi di ricerca, dentro e
+      attorno alle dinamiche del settore e alle sue logiche economiche.
+      Integrando alla pratica della moda elementi che nascono anche fuori dai
+      circuiti più standardizzati, il suo lavoro si costruisce a partire dal
+      basso: l’occhio si incastra nella strada, nella radice, nei contesti in
+      cui le trasformazioni avvengono prima di essere riconosciute come
+      linguaggio, dove tutto ciò che nasce in periferia o fuori dal centro del
+      mercato viene spesso letto come derivato, secondario. Se la struttura
+      sociale è testimoniata da chi la vive, la moda non fa eccezione: sono i
+      corpi reali, gli ambienti quotidiani, le situazioni non codificate a
+      essere i primi testimoni dei cambiamenti nelle rappresentazioni sociali e
+      nel mondo che ci circonda. Le immagini di Tizzano nascono da ciò che
+      esiste già, da ciò che si muove ai margini, da ciò che non è ancora stato
+      assorbito dal linguaggio del mercato. Lo styling diventa un’invenzione, un
+      artefatto che si costruisce assemblandosi, e che allo stesso tempo porta
+      alla luce ciò che resta invisibile nelle rappresentazioni dominanti, fino
+      a spettacolarizzare il dettaglio già presente nel quotidiano. Ogni corpo,
       ogni fenomeno, ogni briciola di vivente contiene un potenziale di eccelso,
-      una materia scintillante e trasformabile. *apertura con slancio al futuro
+      una materia scintillante e trasformabile. Il lavoro si sviluppa come
+      apertura verso nuove possibilità di costruzione dell’immagine, in una
+      direzione che guarda al futuro come spazio di trasformazione, ricerca e
+      collaborazione, mantenendo lo styling come pratica viva, in continua
+      evoluzione.
     </Text>
   );
 }
 
 export default function BioScene() {
   const [hit, setHit] = useState(0);
-  const wheelRef = useRef(0);
-  const touchRef = useRef(0);
-  const touchStartY = useRef(0);
 
   useEffect(() => {
     const original = document.body.style.overflow;
@@ -318,22 +291,10 @@ export default function BioScene() {
       <Canvas
         camera={{ position: [0, 0, 6], fov: 50 }}
         onPointerDown={() => setHit((h) => h + 1)}
-        onWheel={(e) => {
-          wheelRef.current += e.deltaY;
-        }}
-        onTouchStart={(e) => {
-          touchStartY.current = e.touches[0].clientY;
-        }}
-        onTouchMove={(e) => {
-          const currentY = e.touches[0].clientY;
-          const deltaY = currentY - touchStartY.current;
-          touchRef.current += deltaY;
-          touchStartY.current = currentY;
-        }}
       >
         <ambientLight intensity={0.3} />
         <directionalLight position={[5, 5, 5]} />
-        <ScrollingText hit={hit} wheelRef={wheelRef} touchRef={touchRef} />
+        <ScrollingText hit={hit} />
         <MatrixText hit={hit} />
 
         <Model hit={hit} />
