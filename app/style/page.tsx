@@ -23,6 +23,13 @@ export default function Gallery() {
   const items = [
     /*  { type: "img", src: "/images/gallery/tizzano-1.jpg" }, */
     // da 01 a 17
+    { type: "img", src: "/images/gallery/60.jpg" },
+    { type: "img", src: "/images/gallery/61.jpg" },
+    { type: "img", src: "/images/gallery/62.jpg" },
+    { type: "img", src: "/images/gallery/66.jpg" },
+    { type: "img", src: "/images/gallery/70.JPG" },
+    { type: "img", src: "/images/gallery/71.JPG" },
+    { type: "img", src: "/images/gallery/72.JPG" },
     { type: "img", src: "/images/gallery/57.jpg" },
     { type: "img", src: "/images/gallery/58.jpg" },
 

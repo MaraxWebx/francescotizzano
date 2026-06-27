@@ -93,7 +93,7 @@ function FloatingText() {
       anchorX="center"
       anchorY="middle"
     >
-      Stylist • Art Director • Consultant
+      Stylist • Creative Director • Consultant
     </Text>
   );
 }
