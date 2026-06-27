@@ -9,9 +9,9 @@ const gabaritoFont = Mulish({
 });
 
 export const metadata: Metadata = {
-  title: "FrancescoTizzano | Stylist • Art Director • Consultant ",
+  title: "FrancescoTizzano | Stylist • Creative Director • Consultant ",
   description:
-    "Stylist e Art Director a Napoli: trasformo visioni in identità visive forti e riconoscibili, unendo gusto contemporaneo e consulenza creativa mirata.",
+    "Stylist e Creative Director a Napoli: trasformo visioni in identità visive forti e riconoscibili, unendo gusto contemporaneo e consulenza creativa mirata.",
 };
 
 export default function RootLayout({
