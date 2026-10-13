@@ -5,6 +5,7 @@ import Footer from "../component/Footer";
 import { Canvas } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 // 🔹 Componente per caricare e mostrare un modello 3D
 function ModelBox({ url }: { url: string }) {
@@ -18,9 +19,10 @@ function ModelBox({ url }: { url: string }) {
   );
 }
 
-export default function Gallery() {
-  // 🔹 Array dinamico: ognuno specifica il tipo (img o glb)
-  const items = [
+type GalleryItem = { type: string; src: string };
+
+// 🔹 Array dinamico: ognuno specifica il tipo (img o glb)
+const items: GalleryItem[] = [
     /*  { type: "img", src: "/images/gallery/tizzano-1.jpg" }, */
     // da 01 a 17
     { type: "img", src: "/images/gallery/78.jpg" },
@@ -104,7 +106,25 @@ export default function Gallery() {
     { type: "img", src: "/images/gallery/54.jpg" },
     { type: "img", src: "/images/gallery/55.jpg" },
     { type: "img", src: "/images/gallery/56.jpg" },
-  ];
+];
+
+// 🔹 Fisher-Yates: mescola una copia dell'array
+function shuffle<T>(arr: T[]): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+export default function Gallery() {
+  // ordine casuale a ogni visita; mescolato solo sul client per evitare errori di hydration
+  const [shuffled, setShuffled] = useState<GalleryItem[]>([]);
+
+  useEffect(() => {
+    setShuffled(shuffle(items));
+  }, []);
 
   return (
     <div className="bg-black min-h-screen text-white flex flex-col">
@@ -112,8 +132,8 @@ export default function Gallery() {
 
       <main className="flex-1 container mx-auto  overflow-hidden">
         <div className="columns-2 sm:columns-3 md:columns-4 gap-2">
-          {items.map((item, i) => (
-            <div key={i} className="mb-2 break-inside-avoid">
+          {shuffled.map((item) => (
+            <div key={item.src} className="mb-2 break-inside-avoid">
               <Image
                 src={item.src}
                 alt=""
