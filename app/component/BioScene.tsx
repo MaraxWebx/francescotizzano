@@ -275,8 +275,45 @@ function ScrollingText({ hit }: { hit: number }) {
   );
 }
 
+/* =========================
+   SOUND
+========================= */
+
+function useHitSound() {
+  const ctxRef = useRef<AudioContext | null>(null);
+
+  return () => {
+    // l'AudioContext va creato dentro un gesto dell'utente (iOS/Safari)
+    if (!ctxRef.current) ctxRef.current = new AudioContext();
+    const ctx = ctxRef.current;
+    if (ctx.state === "suspended") ctx.resume();
+
+    const now = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    const filter = ctx.createBiquadFilter();
+    const gain = ctx.createGain();
+
+    // blip digitale con pitch casuale, così ogni tap suona un po' diverso
+    const freq = 300 + Math.random() * 500;
+    osc.type = "square";
+    osc.frequency.setValueAtTime(freq, now);
+    osc.frequency.exponentialRampToValueAtTime(freq * 0.25, now + 0.15);
+
+    filter.type = "lowpass";
+    filter.frequency.value = 2000;
+
+    gain.gain.setValueAtTime(0.15, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+
+    osc.connect(filter).connect(gain).connect(ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.2);
+  };
+}
+
 export default function BioScene() {
   const [hit, setHit] = useState(0);
+  const playHit = useHitSound();
 
   useEffect(() => {
     const original = document.body.style.overflow;
@@ -290,7 +327,10 @@ export default function BioScene() {
     <div className="h-screen w-screen bg-black">
       <Canvas
         camera={{ position: [0, 0, 6], fov: 50 }}
-        onPointerDown={() => setHit((h) => h + 1)}
+        onPointerDown={() => {
+          setHit((h) => h + 1);
+          playHit();
+        }}
       >
         <ambientLight intensity={0.3} />
         <directionalLight position={[5, 5, 5]} />
